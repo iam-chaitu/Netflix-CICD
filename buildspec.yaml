@@ -27,3 +27,9 @@ phases:
     commands:
       - echo "waiting right now"
       - docker push iamchaitu/netflix:latest
+artifacts:
+  files:
+    - '**/*'
+  base-directory: "./"
+  name: build-artifact-name
+  discard-paths: no
