@@ -23,7 +23,7 @@ In This Project, we are Developing and Deploying a video streaming application o
 Clone this Repository
 
 ```elixir
-git clone https://github.com/NotHarshhaa/DevOps-Projects.git
+git clone git@github.com:iam-chaitu/Netflix-Clone.git
 ```
 
 # **Project Architecture**
