@@ -21,9 +21,9 @@ phases:
       - echo "dependencies installed"
   build:
     commands:
+      - docker login -u $USERNAME -p $PASSWORD
       - docker build . -t iamchaitu/netflix:latest --build-arg TMDB_V3_API_KEY=$KEY
   post_build:
     commands:
       - echo "waiting right now"
-      - docker login -u $USERNAME -p $PASSWORD
       - docker push iamchaitu/netflix:latest
