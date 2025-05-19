@@ -2,34 +2,34 @@ version: 0.2
 
 env:
   parameter-store:
-    USERNAME: /myapp/docker-credentials/username
-    PASSWORD: /myapp/docker-credentials/password
-    KEY:  key
+    KEY: /netflix/key
 
-        
 phases:
   install:
     runtime-versions:
       nodejs: latest
     commands:
       - node --version
-      - echo "installed node "
-    # steps:
+      - echo "installed node"
   pre_build:
     commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws --version
+      - $(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 637423384780.dkr.ecr.YOUR_REGION.amazonaws.com)
       - npm install
-      - echo "dependencies installed"
+      - echo "Dependencies installed"
   build:
     commands:
-      - docker login -u $USERNAME -p $PASSWORD
-      - docker build . -t iamchaitu/netflix:latest --build-arg TMDB_V3_API_KEY=$KEY
+      - echo "Building the Docker image..."
+      - docker build . -t 637423384780.dkr.ecr.us-east-1.amazonaws.com/netflix:latest --build-arg TMDB_V3_API_KEY=$KEY
   post_build:
     commands:
-      - echo "waiting right now"
-      - docker push iamchaitu/netflix:latest
+      - echo "Pushing the Docker image..."
+      - docker push 637423384780.dkr.ecr.us-east-1.amazonaws.com/netflix:latest
+      - echo "Docker image pushed."
 artifacts:
   files:
     - '**/*'
-  base-directory: "./"
+  base-directory: './'
   name: build-artifact-name
   discard-paths: no
